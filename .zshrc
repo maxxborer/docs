@@ -1,12 +1,12 @@
-export ZSH="/home/***REMOVED***/.oh-my-zsh"
+export ZSH="/home/$USER/.oh-my-zsh"
 
 ZSH_THEME="agnoster"
 
 plugins=(git)
 
-alias -g pro.="cd /home/***REMOVED***/PRO/"
+alias -g pro.="cd /home/$USER/PRO/"
 
-alias -g czsh="code /home/***REMOVED***/.zshrc"
+alias -g czsh="code /home/$USER/.zshrc"
 
 alias -g tarpkg="tar -xvf "
 
