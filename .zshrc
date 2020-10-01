@@ -1,21 +1,32 @@
 export ZSH="/home/$USER/.oh-my-zsh"
-
+DEFAULT_USER="***REMOVED***"
 ZSH_THEME="agnoster"
 
 plugins=(git)
 
+alias -g ls="ls –color=auto -la"
+alias -g diff="colordiff"
+alias -g bc="bc -l"
+alias -g h="history 6"
+alias -g vi="vim"
+alias -g mkdir="mkdir -pv"
+alias -g mount="mount | column -t"
+alias -g ports="netstat -tulanp"
+alias -g wget="wget -c"
+alias -g meminfo="free -m -l -t"
+alias -g cpu="lscpu"
+alias -g gpumeminfo="grep -i –color memory /var/log/Xorg.0.log"
+
 alias -g pro.="cd /home/$USER/PRO/"
-
 alias -g czsh="code /home/$USER/.zshrc"
-
 alias -g tarpkg="tar -xvf "
 
 alias -g c="clear"
 alias -g pressf="rm -rf "
 alias -g killnode="killall -s KILL node"
 
-alias -g ap.="sudo apt purge "
-alias -g ai.="sudo apt install "
+alias -g aptd.="sudo apt purge "
+alias -g apti.="sudo apt install "
 alias -g autoremove.="sudo apt autoremove"
 
 alias -g clone.="git clone"
@@ -32,7 +43,7 @@ alias -g gfrp.="git flow release publish "
 alias -g gfrf.="git flow release finish "
 
 alias -g cm="./node_modules/cz-customizable/standalone.js -S"
-alias -g sc.="gadd; ./node_modules/cz-customizable/standalone.js -S"
+alias -g sc.="st.; ./node_modules/cz-customizable/standalone.js -S"
 
 alias -g n="npm"
 alias -g i.="npm i"
