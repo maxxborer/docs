@@ -1,83 +1,45 @@
-export ZSH="/home/$USER/.oh-my-zsh"
-DEFAULT_USER="***REMOVED***"
-ZSH_THEME="agnoster"
+export ZSH="/Users/***REMOVED***/.oh-my-zsh"
+ZSH_THEME="hyper-oh-my-zsh"
+
+export EDITOR="code -w"
 
 plugins=(git)
 
-alias -g ls="ls –color=auto -la"
-alias -g diff="colordiff"
-alias -g bc="bc -l"
-alias -g h="history 6"
-alias -g vi="vim"
-alias -g mkdir="mkdir -pv"
-alias -g mount="mount | column -t"
-alias -g ports="netstat -tulanp"
-alias -g wget="wget -c"
-alias -g meminfo="free -m -l -t"
-alias -g cpu="lscpu"
-alias -g gpumeminfo="grep -i –color memory /var/log/Xorg.0.log"
+alias c="clear"
+alias killnode.="killall -s KILL node"
 
-alias -g pro.="cd /home/$USER/PRO/"
-alias -g czsh="code /home/$USER/.zshrc"
-alias -g tarpkg="tar -xvf "
+alias clone.="git clone"
+alias push.="git push"
+alias pull.="git pull"
+alias reset.="git reset HEAD~"
+alias st.="git add ."
 
-alias -g c="clear"
-alias -g pressf="rm -rf "
-alias -g killnode="killall -s KILL node"
+alias gfs.="git flow feature start"
+alias gff.="git flow feature finish"
 
-alias -g aptd.="sudo apt purge "
-alias -g apti.="sudo apt install "
-alias -g autoremove.="sudo apt autoremove"
+alias gfrs.="git flow release start "
+alias gfrp.="git flow release publish "
+alias gfrf.="git flow release finish "
 
-alias -g clone.="git clone"
-alias -g push.="git push"
-alias -g pull.="git pull"
-alias -g reset.="git reset HEAD~"
-alias -g st.="git add ."
+alias i.="yarn"
+alias start.="yarn start"
+alias dev.="yarn dev"
+alias watch.="yarn watch"
+alias build.="yarn build"
+alias release.="yarn release"
 
-alias -g gfs.="git flow feature start"
-alias -g gff.="git flow feature finish"
+# export ANDROID_HOME=$HOME/Library/Android/sdk
+# export PATH=$PATH:$ANDROID_HOME/emulator
+# export PATH=$PATH:$ANDROID_HOME/tools
+# export PATH=$PATH:$ANDROID_HOME/tools/bin
+# export PATH=$PATH:$ANDROID_HOME/platform-tools
+# export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/
 
-alias -g gfrs.="git flow release start "
-alias -g gfrp.="git flow release publish "
-alias -g gfrf.="git flow release finish "
-
-alias -g cm="./node_modules/cz-customizable/standalone.js -S"
-alias -g sc.="st.; ./node_modules/cz-customizable/standalone.js -S"
-
-alias -g n="npm"
-alias -g i.="npm i"
-alias -g start.="npm start"
-alias -g boot.="npm run bootstrap"
-alias -g dev.="npm run dev"
-alias -g run.="boot.;dev."
-alias -g watch.="npm run watch"
-alias -g build.="npm run build"
-alias -g locale.="npm run build-locales"
-alias -g i18.="npm run i18"
-alias -g release.="npm run release"
-alias -g story.="npm run storybook"
-
-alias -g ystart.="npm start"
-alias -g yboot.="yarn bootstrap"
-alias -g ydev.="yarn dev"
-alias -g yrun.="yboot.;ydev."
-alias -g ywatch.="yarn watch"
-alias -g ybuild.="yarn build"
-alias -g ylocale.="yarn build-locales"
-alias -g yi18.="yarn i18"
-alias -g yrelease.="yarn release"
-alias -g ystory.="yarn storybook"
-
-eval $(thefuck --alias)
-
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+export PATH=/usr/local/bin:$PATH
 
 if [[ ! -d ~/.zplug ]];then
   git clone https://github.com/zplug/zplug ~/.zplug
 fi
-
 # This load plugins
 source ~/.zplug/init.zsh
 zplug "plugins/git", from:oh-my-zsh
@@ -95,6 +57,78 @@ if ! zplug check --verbose; then
 fi
 zplug load --verbose
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 source $ZSH/oh-my-zsh.sh
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
 clear
-# echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+export ZSH="/Users/***REMOVED***/.oh-my-zsh"
+ZSH_THEME="hyper-oh-my-zsh"
+
+export EDITOR="code -w"
+
+plugins=(git)
+
+alias c="clear"
+alias killnode.="killall -s KILL node"
+
+alias clone.="git clone"
+alias push.="git push"
+alias pull.="git pull"
+alias reset.="git reset HEAD~"
+alias st.="git add ."
+
+alias gfs.="git flow feature start"
+alias gff.="git flow feature finish"
+
+alias gfrs.="git flow release start "
+alias gfrp.="git flow release publish "
+alias gfrf.="git flow release finish "
+
+alias i.="yarn"
+alias start.="yarn start"
+alias dev.="yarn dev"
+alias watch.="yarn watch"
+alias build.="yarn build"
+alias release.="yarn release"
+
+# export ANDROID_HOME=$HOME/Library/Android/sdk
+# export PATH=$PATH:$ANDROID_HOME/emulator
+# export PATH=$PATH:$ANDROID_HOME/tools
+# export PATH=$PATH:$ANDROID_HOME/tools/bin
+# export PATH=$PATH:$ANDROID_HOME/platform-tools
+# export JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/
+
+export PATH=/usr/local/bin:$PATH
+
+if [[ ! -d ~/.zplug ]];then
+  git clone https://github.com/zplug/zplug ~/.zplug
+fi
+# This load plugins
+source ~/.zplug/init.zsh
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/sudo", from:oh-my-zsh
+zplug "plugins/command-not-found", from:oh-my-zsh
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+zplug load --verbose
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+source $ZSH/oh-my-zsh.sh
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+clear
