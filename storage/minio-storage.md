@@ -1,6 +1,6 @@
-`$MINIO_DOMAIN` = `'storage.***REMOVED***.ru'`
-`$MINIO_ACCESS_KEY` = `'***REMOVED***'`
-`$MINIO_SECRET_KEY` = `'12345'`
+- `$MINIO_DOMAIN` = `'storage.***REMOVED***.ru'`
+- `$MINIO_ACCESS_KEY` = `'***REMOVED***'`
+- `$MINIO_SECRET_KEY` = `'12345'`
 
 ```
 version: "3.6"
