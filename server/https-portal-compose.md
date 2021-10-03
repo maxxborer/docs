@@ -1,4 +1,4 @@
-`$DOMAINS` = `'***REMOVED***.ru => https://***REMOVED***.ru:80, storage.***REMOVED***.ru => http://minio:9000'`
+`${DOMAINS}` = `'***REMOVED***.ru => https://***REMOVED***.ru:80, storage.***REMOVED***.ru => http://minio:9000'`
 
 ```
 version: "3.6"
@@ -10,7 +10,7 @@ services:
       - '80:80'
       - '443:443'
     environment:
-      DOMAINS: $DOMAINS
+      DOMAINS: ${DOMAINS}
       STAGE: 'production' # Don't use production until staging works
       FORCE_RENEW: 'true'
       CLIENT_MAX_BODY_SIZE: 5G

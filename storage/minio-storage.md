@@ -1,6 +1,6 @@
-- `$MINIO_DOMAIN` = `'storage.***REMOVED***.ru'`
-- `$MINIO_ACCESS_KEY` = `'***REMOVED***'`
-- `$MINIO_SECRET_KEY` = `'12345'`
+- `${MINIO_DOMAIN}` = `'storage.***REMOVED***.ru'`
+- `${MINIO_ACCESS_KEY}` = `'***REMOVED***'`
+- `${MINIO_SECRET_KEY}` = `'12345'`
 
 ```
 version: "3.6"
@@ -9,9 +9,9 @@ services:
   minio:
     image: minio/minio
     environment:
-      MINIO_DOMAIN: $MINIO_DOMAIN
-      MINIO_ACCESS_KEY: $MINIO_ACCESS_KEY
-      MINIO_SECRET_KEY: $MINIO_SECRET_KEY
+      MINIO_DOMAIN: ${MINIO_DOMAIN}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
     ports:
       - "9000:9000"
     volumes:
