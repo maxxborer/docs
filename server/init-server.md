@@ -90,9 +90,7 @@ chsh -s $(which zsh)
 source <(antibody init)
 
 echo 'alias c="clear"
-
 source <(antibody init)
-
 antibody bundle < ~/.zsh_plugins.txt' >> ~/.zshrc
 ```
 
