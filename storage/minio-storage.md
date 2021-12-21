@@ -2,7 +2,7 @@
 - `${MINIO_ACCESS_KEY}` = `'***REMOVED***'`
 - `${MINIO_SECRET_KEY}` = `'12345'`
 
-```
+```yaml
 version: "3.6"
 services:
 
@@ -31,3 +31,4 @@ networks:
     name: ***REMOVED***
 
 ```
+

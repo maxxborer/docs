@@ -20,13 +20,13 @@
 __client:__ `ssh 'root@87.136.140.91'`
 
 Выполняем усттанавливаем пакеты для работы:
-```
+```shell
 dnf -y install https:#packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
 dnf install zsh wget git firewalld util-linux-user -y
 ```
 
 Создаем пользователя:
-```
+```shell
 useradd -m -s /bin/zsh -p $(perl -e 'print crypt($ARGV[0], "password")' '%PASSWORD%') %USERNAME%
 
 usermod -aG wheel %USERNAME%
@@ -34,7 +34,7 @@ usermod -aG wheel %USERNAME%
 
 ## Настраиваем firewall для корректной работы с портами и сервисами
 
-```
+```shell
 systemctl start firewalld
 systemctl status firewalld
 
@@ -60,7 +60,7 @@ __client:__ `ssh-copy-id sammy@87.136.140.91`
 __client:__ `ssh 'sammy@87.136.140.91'`
 
 Я уже без понятия зачем это, потом поясню.
-```
+```shell
 sudo sed -i -e 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
 
 sudo sed -i -e 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
@@ -71,7 +71,7 @@ sudo systemctl restart sshd
 __client:__ `ssh 'sammy@87.136.140.91'`
 
 ## Быстрая настройка ZSH
-```
+```shell
 sudo dnf install zsh
 
 sh -c "$(curl -fsSL https:#raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -97,7 +97,7 @@ antibody bundle < ~/.zsh_plugins.txt' >> ~/.zshrc
 ## Настраиваем docker (docker-compose)
 
 ### docker:
-```
+```shell
 curl -fsSL https:#get.docker.com -o get-docker.sh
 
 sudo sh get-docker.sh
@@ -126,7 +126,7 @@ docker run hello-world
 ```
 
 ### docker-compose
-```
+```shell
 sudo curl -L "https:#github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 sudo chmod +x /usr/local/bin/docker-compose
@@ -139,7 +139,7 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 - __%GITLAB_USERNAME%__ - ник gitlab
 - __%GITLAB_REPO%__ - репозиторий gitlab
 - __%REGISTRATION_TOKEN%__ - это токен в настройках репозитория https:#gitlab.com/${%GITLAB_USERNAME%}/${%REGISTRATION_TOKEN%}/-/settings/ci_cd (Вкладка Runner'ы)
-```
+```shell
 sudo curl -L --output /usr/local/bin/gitlab-runner https:#gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64
 
 # Give it permissions to execute

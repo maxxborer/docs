@@ -1,6 +1,6 @@
 `${DOMAINS}` = `'***REMOVED***.ru => https://***REMOVED***.ru:80, storage.***REMOVED***.ru => http://minio:9000'`
 
-```
+```yaml
 version: "3.6"
 services:
 
