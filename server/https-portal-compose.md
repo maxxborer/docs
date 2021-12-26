@@ -15,7 +15,7 @@ services:
       FORCE_RENEW: 'true'
       CLIENT_MAX_BODY_SIZE: 5G
       GZIP: 'on'
-      WEBSOCKET: true
+      WEBSOCKET: 'true'
     restart: always
     volumes: 
       - https-portal-data:/var/lib/https-portal
