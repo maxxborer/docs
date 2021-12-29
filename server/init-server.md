@@ -1,7 +1,7 @@
 ## Вводные
 
 - арендованный vps
-- centos 7 или 8
+- ubuntu 20.4
 
 
 ## Определения
@@ -14,67 +14,17 @@
 
 ## Настраиваем сервер
 
-Подключаемся к серверу.
-Здесь он может запроситть пароль ssh, вводим его.
+Производим настройку по статье в DO: https://www.google.com/amp/s/www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04-ru.amp
 
-__client:__ `ssh 'root@87.136.140.91'`
+Устанавливаем docker согласно документации: https://docs.docker.com/engine/install/ubuntu/
 
-Выполняем усттанавливаем пакеты для работы:
-```shell
-dnf -y install https:#packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
-dnf install zsh wget git firewalld util-linux-user -y
-```
-
-Создаем пользователя:
-```shell
-useradd -m -s /bin/zsh -p $(perl -e 'print crypt($ARGV[0], "password")' '%PASSWORD%') %USERNAME%
-
-usermod -aG wheel %USERNAME%
-```
-
-## Настраиваем firewall для корректной работы с портами и сервисами
-
-```shell
-systemctl start firewalld
-systemctl status firewalld
-
-
-# http сервер
-firewall-cmd --permanent --add-service=http
-
-firewall-cmd --permanent --add-service=https
-
-# postgresql
-sudo firewall-cmd --zone=public --add-port=5432/tcp --permanent
-
-# minio хранилище
-firewall-cmd --zone=public --add-port=9000/tcp --permanent
-
-firewall-cmd --reload
-```
-
-## Подключение через ssh-key
-
-
-__client:__ `ssh-copy-id sammy@87.136.140.91`
-__client:__ `ssh 'sammy@87.136.140.91'`
-
-Я уже без понятия зачем это, потом поясню.
-```shell
-sudo sed -i -e 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
-
-sudo sed -i -e 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
-
-sudo systemctl restart sshd
-```
-
-__client:__ `ssh 'sammy@87.136.140.91'`
+Открываем порты в firewall: __TCP 22, TCP 80, TCP 443, TCP 2375, TCP 2376, TCP 2377, TCP 3000, TCP 7946, UDP 4789, UDP 7946__.
 
 ## Быстрая настройка ZSH
 ```shell
-sudo dnf install zsh
+sudo apt zsh
 
-sh -c "$(curl -fsSL https:#raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 curl -sfL git.io/antibody | sudo sh -s - -b /usr/local/bin
 
@@ -94,75 +44,69 @@ source <(antibody init)
 antibody bundle < ~/.zsh_plugins.txt' >> ~/.zshrc
 ```
 
-## Настраиваем docker (docker-compose)
-
-### docker:
-```shell
-curl -fsSL https:#get.docker.com -o get-docker.sh
-
-sudo sh get-docker.sh
-
-sudo sh -eux <<EOF
-# Set user.max_user_namespaces
-cat <<EOT > /etc/sysctl.d/51-rootless.conf
-user.max_user_namespaces = 28633
-EOT
-sysctl --system
-EOF
-
-sudo usermod -aG docker $USER
-
-newgrp docker 
-
-sudo systemctl enable docker
-
-sudo systemctl enable containerd
-
-sudo systemctl start docker
-
-sudo systemctl start containerd
-
-docker run hello-world
-```
-
-### docker-compose
-```shell
-sudo curl -L "https:#github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-sudo chmod +x /usr/local/bin/docker-compose
-
-sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-```
-
 ## Настраиваем gitlab-runner
 
-- __%GITLAB_USERNAME%__ - ник gitlab
-- __%GITLAB_REPO%__ - репозиторий gitlab
-- __%REGISTRATION_TOKEN%__ - это токен в настройках репозитория https:#gitlab.com/${%GITLAB_USERNAME%}/${%REGISTRATION_TOKEN%}/-/settings/ci_cd (Вкладка Runner'ы)
-```shell
-sudo curl -L --output /usr/local/bin/gitlab-runner https:#gitlab-runner-downloads.s3.amazonaws.com/latest/binaries/gitlab-runner-linux-amd64
-
-# Give it permissions to execute
-sudo chmod +x /usr/local/bin/gitlab-runner
-
-# Create a GitLab CI user
-sudo useradd --comment 'GitLab Runner' --create-home gitlab-runner --shell /bin/bash
-
-sudo echo "gitlab-runner ALL=(ALL) NOPASSWD:ALL" > sudo /etc/sudoers
-
-sudo usermod -aG docker gitlab-runner
-
-newgrp docker gitlab-runner
-
-sudo ln -s /usr/local/bin/gitlab-runner /usr/bin/gitlab-runner
-
-# Install and run as service
-sudo gitlab-runner install --user=gitlab-runner --working-directory=/home/gitlab-runner
-
-sudo gitlab-runner start
-
-# подробнее https:#docs.gitlab.com/runner/register/#linux
-sudo gitlab-runner register --url https:#gitlab.com/ --registration-token %REGISTRATION_TOKEN%
+Создаём volume для конфига gitlab-runner:
+```bash
+docker volume create gitlab-runner-config
 ```
-В качестве executor я выбрал shell для начала
-Далее следует добавить yml конфиг от gitlab и радоваться жизни
+
+Запускаем gitlab-runner через docker:
+```bash
+docker run -d --name gitlab-runner --restart always \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v gitlab-runner-config:/etc/gitlab-runner \
+    gitlab/gitlab-runner:alpine
+```
+
+Регистрируем runner:
+```bash
+docker run --rm -it -v gitlab-runner-config:/etc/gitlab-runner gitlab/gitlab-runner:alpine register
+```
+(https://docs.gitlab.com/runner/register/index.html#docker).
+
+- Не забудьте указать ваши __tags__ при регистрации! И использовать эти теги в `gitlab.ci.yml` ваших проектов.
+- Установите runner executor __'docker'__.
+- В вашем vps авторизуйтесь как root:
+```shell
+sudo su
+```
+- Отредактируйте конфиг gitlab runner:
+```shell
+nano /var/lib/docker/volumes/gitlab-runner-config/_data/config.toml
+```
+- Вы должны поправить 2 строчки:
+```toml
+     privileged = true
+     volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
+```
+- Чтобы конфиг выглядел примерно так:
+```toml
+concurrent = 1
+check_interval = 0
+
+[session_server]
+   session_timeout = 1800
+
+[[runners]]
+   name = "***REMOVED***.ru"
+   url = "https://gitlab.com/"
+   token = "{{YOUR_TOKEN}}"
+   executor = "docker"
+   [runners.custom_build_dir]
+   [runners.cache]
+     [runners.cache.s3]
+     [runners.cache.gcs]
+     [runners.cache.azure]
+   [runners.docker]
+     tls_verify = false
+     image = "docker:stable"
+     privileged = true
+     disable_entrypoint_overwrite = false
+     oom_kill_disable = false
+     disable_cache = false
+     volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
+     shm_size = 0
+```
+
+Готово! Собирайте и деплойте ваши проекты!
