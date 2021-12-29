@@ -26,9 +26,8 @@ services:
       - ***REMOVED***
 
 networks:
-  default:
+  ***REMOVED***-network:
     external: true
-    name: ***REMOVED***
 
 ```
 
