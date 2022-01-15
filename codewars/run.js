@@ -8,7 +8,7 @@ function runFunc(func, args, start) {
   const result = func(args);
   console.log(
     " type: ", typeof result, "\n",
-    "result: ", result, "\n",
+    { result }, "\n",
     "JSON: ", JSON.stringify(result, null, "\t")
   );
   console.log("\n COMPLETED IN: " + (new Date() - start) + "ms\n");
@@ -34,10 +34,11 @@ function run(func, args, runBench = true) {
     bench(func, args, 10000);
     bench(func, args, 100000);
     bench(func, args, 1000000);
-    bench(func, args, 10000000);
+    // bench(func, args, 10000000);
   }
 
   console.log("\n END: " + (new Date() - start) + "ms");
+  console.log("--------------------------------------");
 }
 
 module.exports = run;

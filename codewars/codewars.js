@@ -1,7 +1,9 @@
 var run = require("./run");
 
-const args = 67 || undefined;
+const args = "is2 Thi1s T4est 3a" || undefined;
 
 run(function myDecision(funcArgs) {
-  return String(funcArgs); // решение задачи
+  const result = [];
+  funcArgs.split(' ').forEach(word => result[+/\d+/.exec(word) - 1] = word);
+  return result.join(' ');
 }, args);
