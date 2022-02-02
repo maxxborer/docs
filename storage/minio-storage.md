@@ -1,5 +1,5 @@
-- `${MINIO_DOMAIN}` = `'storage.***REMOVED***.ru'`
-- `${MINIO_ACCESS_KEY}` = `'***REMOVED***'`
+- `${MINIO_DOMAIN}` = `'storage.maxxborer.com'`
+- `${MINIO_ACCESS_KEY}` = `'maxxborer'`
 - `${MINIO_SECRET_KEY}` = `'12345'`
 
 ```yaml
@@ -23,10 +23,10 @@ services:
       timeout: 20s
       retries: 3
     networks:
-      - ***REMOVED***
+      - maxxborer
 
 networks:
-  ***REMOVED***-network:
+  maxxborer-network:
     external: true
 
 ```

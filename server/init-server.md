@@ -11,6 +11,20 @@
 
 Открываем порты в firewall: __TCP 22, TCP 80, TCP 443, TCP 2375, TCP 2376, TCP 2377, TCP 3000, TCP 7946, UDP 4789, UDP 7946__.
 
+```shell
+sudo ufw allow 22/tcp;
+sudo ufw allow 80/tcp;
+sudo ufw allow 443/tcp;
+sudo ufw allow 2375/tcp;
+sudo ufw allow 2376/tcp;
+sudo ufw allow 2377/tcp;
+sudo ufw allow 2511/tcp;
+sudo ufw allow 3000/tcp;
+sudo ufw allow 7946/tcp;
+sudo ufw allow 4789/udp;
+sudo ufw allow 7946/udp;
+```
+
 ## Быстрая настройка ZSH
 ```shell
 sudo apt zsh
@@ -80,7 +94,7 @@ check_interval = 0
    session_timeout = 1800
 
 [[runners]]
-   name = "***REMOVED***.ru"
+   name = "maxxborer.com"
    url = "https://gitlab.com/"
    token = "{{YOUR_TOKEN}}"
    executor = "docker"
