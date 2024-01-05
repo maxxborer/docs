@@ -27,7 +27,7 @@ sudo ufw allow 7946/udp;
 
 ## Быстрая настройка ZSH
 ```shell
-sudo apt zsh
+sudo apt install zsh
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
